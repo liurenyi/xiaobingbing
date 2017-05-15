@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">xiaobingbing</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="fragment_arena">arena fragment</string>
+    <string name="fragment_team">team fragment</string>
+    <string name="home_title">主页</string>
+    <string name="home_tab_jjc">竞技场</string>
+    <string name="home_tab_dream">梦境</string>
+    <string name="home_tab_sky">天空要塞</string>
+    <string-array name="dreamBoss">
+        <item>齐天大圣</item>
+        　　
+        <item>黑暗娜迦</item>
+        　　
+        <item>深渊恶魔</item>
+        　　
+        <item>鲜血伯爵</item>
+        　　
+        <item>堕落天使</item>
+        　　
+        <item>大地之斧</item>
+        　　
+        <item>无畏骑士</item>
+        　　
+        <item>圣灵骑士</item>
+        　　
+        <item>魔像武者</item>
+    </string-array>
+
+    <string-array name="home_tab">
+        <item>竞技场</item>
+        <item>梦境</item>
+        <item>天空要塞</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

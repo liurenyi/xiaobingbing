@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/boosName"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_weight="2" />
+
+    <TextView
+        android:id="@+id/bossVersion"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/boosBattle"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="start"
+        android:padding="10dp"
+        android:textColor="@color/colorAccent"
+        android:singleLine="false"
+        android:layout_weight="5" />
+
+</LinearLayout>
