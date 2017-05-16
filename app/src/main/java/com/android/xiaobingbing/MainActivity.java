@@ -1,10 +1,14 @@
 package com.android.xiaobingbing;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.xiaobingbing.ArenaFragment.ArenaFragment;
 import com.android.xiaobingbing.Cache.CacheManager;
@@ -37,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private String[] tabTitles;
     private int[] imgSelectors = new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
 
+    private List<String> permissionList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 //            getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_main);
+        initPermission();
         initGameData();
         tabHost = (FragmentTabHost) this.findViewById(R.id.tabHost);
         tabHost.setup(MainActivity.this, getSupportFragmentManager(), android.R.id.tabcontent);
@@ -53,11 +61,28 @@ public class MainActivity extends AppCompatActivity {
             inflate = LayoutInflater.from(this).inflate(R.layout.tab_item, null);
             tabItemText = (TextView) inflate.findViewById(R.id.tab_item_text);
             tabItemImage = (ImageView) inflate.findViewById(R.id.tab_item_image);
+            Log.e(TAG,"tabTitles[] = " + tabTitles.length);
             tabItemText.setText(tabTitles[i]);
             tabItemImage.setImageResource(imgSelectors[i]);
             tabHost.addTab(tabHost.newTabSpec("" + i).setIndicator(inflate), fragment[i], null);
         }
 
+    }
+
+    private void initPermission() {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+//        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//        }
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if (!permissionList.isEmpty()) {
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(MainActivity.this, permissions, 1);
+        }
     }
 
     private void initGameData() {
@@ -86,4 +111,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0) {
+                    for (int result : grantResults) {
+                        if (result != PackageManager.PERMISSION_GRANTED) {
+                            Toast.makeText(MainActivity.this, "All permissions must be agreed to use the location function", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "aaaaa", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+                break;
+        }
+    }
 }
+
+

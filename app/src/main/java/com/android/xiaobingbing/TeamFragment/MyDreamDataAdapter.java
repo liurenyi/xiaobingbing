@@ -40,7 +40,9 @@ public class MyDreamDataAdapter extends BaseExpandableListAdapter {
         child = new ArrayList<>();
         String[] dreamBosses = mContext.getResources().getStringArray(R.array.dreamBoss);
         for (int i = 0; i < dreamBosses.length; i++) {
+            Log.e(tag,"The next step");
             List<DreamBattleArray> dreamBattleArrays = DataSupport.where("bossName = ?", dreamBosses[i]).find(DreamBattleArray.class);
+            Log.e(tag,"The next step ...");
             StringBuilder sb = new StringBuilder();
             for (DreamBattleArray dreamBattleArray : dreamBattleArrays) {
                 sb.append(dreamBattleArray.getBossVersion() + ": " + dreamBattleArray.getBossRaider() + "-");

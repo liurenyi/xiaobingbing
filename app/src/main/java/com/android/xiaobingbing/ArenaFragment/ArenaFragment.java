@@ -14,7 +14,6 @@ import com.android.xiaobingbing.R;
  */
 public class ArenaFragment extends Fragment {
 
-
     public ArenaFragment() {
         // Required empty public constructor
     }

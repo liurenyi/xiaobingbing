@@ -41,9 +41,7 @@ public class TeamFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_team, null);
         listView = (ExpandableListView) view.findViewById(R.id.listView);
-//        getDreamInfo();
         adapter = new MyDreamDataAdapter(getContext());
-//        adapter = new DreamAdapter(getContext(), dreamLists);
         listView.setAdapter(adapter);
         return view;
     }
