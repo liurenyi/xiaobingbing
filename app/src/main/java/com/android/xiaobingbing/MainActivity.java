@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String heroString = preferences.getString(GameManager.HEROIC_INIT_KEY, null);
         String dreamBattleString = preferences.getString(GameManager.DREAM_BATTLE_ARRAY_INIT_KEY, null);
+        String skyBattle = preferences.getString(GameManager.SKY_BATTLT_ARRAY_INIT_KEY, null);
         Log.e(TAG, "heroString = " + heroString);
         Log.e(TAG, "dreamBattleString = " + dreamBattleString);
         if (heroString == null) {
@@ -102,6 +103,14 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     GameManager.getLocationFile(MainActivity.this, CacheManager.FILE_NAME_2);
+                }
+            }).start();
+        }
+        if (skyBattle == null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    GameManager.getLocationFile(MainActivity.this, CacheManager.FILE_NAME_3);
                 }
             }).start();
         }

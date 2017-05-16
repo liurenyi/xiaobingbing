@@ -8,6 +8,7 @@ import android.util.Log;
 import com.android.xiaobingbing.Cache.CacheManager;
 import com.android.xiaobingbing.data.DreamBattleArray;
 import com.android.xiaobingbing.data.HeroicInfo;
+import com.android.xiaobingbing.data.SkyBattleArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +30,7 @@ public class GameManager {
     public static String TAG = "liu-GameManager";
     public static final String HEROIC_INIT_KEY = "heroic_init";
     public static final String DREAM_BATTLE_ARRAY_INIT_KEY = "dream_battle_array";
+    public static final String SKY_BATTLT_ARRAY_INIT_KEY = "sky_battle_array";
 
     public static void getLocationFile(Context context, String fileName) {
         try {
@@ -44,6 +46,8 @@ public class GameManager {
                 parseHeroicLocalFile(sb.toString(), context);
             } else if (CacheManager.FILE_NAME_2.equals(fileName)) {
                 parseDreamLocalFile(sb.toString(), context);
+            } else if (CacheManager.FILE_NAME_3.equals(fileName)) {
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,6 +90,26 @@ public class GameManager {
             }
             DataSupport.saveAll(lists);
             savePreference(context, DREAM_BATTLE_ARRAY_INIT_KEY, "dream battle array data alread init");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void parseSkyLocalFile(String data, Context context) {
+        try {
+            JSONArray array = new JSONArray(data);
+            List<SkyBattleArray> lists = new ArrayList<>();
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+                SkyBattleArray sky = new SkyBattleArray();
+                sky.setFloor(jsonObject.getInt("floor"));
+                sky.setFloorBoss(jsonObject.getString("floorBoss"));
+                sky.setWin(jsonObject.getString("win"));
+                sky.setDescription(jsonObject.optString("description"));
+                lists.add(sky);
+            }
+            DataSupport.saveAll(lists);
+            savePreference(context, SKY_BATTLT_ARRAY_INIT_KEY, "sky battle array data alread init");
         } catch (JSONException e) {
             e.printStackTrace();
         }

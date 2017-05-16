@@ -8,6 +8,7 @@
     <list>
         <mapping class="com.android.xiaobingbing.data.HeroicInfo" />
         <mapping class="com.android.xiaobingbing.data.DreamBattleArray" />
+        <mapping class="com.android.xiaobingbing.data.SkyBattleArray" />
     </list>
 
 </litepal>
