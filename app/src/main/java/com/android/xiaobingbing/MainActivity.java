@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
             tabItemText = (TextView) inflate.findViewById(R.id.tab_item_text);
             tabItemImage = (ImageView) inflate.findViewById(R.id.tab_item_image);
             Log.e(TAG,"tabTitles[] = " + tabTitles.length);
+            if (tabTitles.length == 0) {
+                tabTitles = getResources().getStringArray(R.array.home_tab);
+            }
             tabItemText.setText(tabTitles[i]);
             tabItemImage.setImageResource(imgSelectors[i]);
             tabHost.addTab(tabHost.newTabSpec("" + i).setIndicator(inflate), fragment[i], null);
@@ -89,27 +92,12 @@ public class MainActivity extends AppCompatActivity {
         String dreamBattleString = preferences.getString(GameManager.DREAM_BATTLE_ARRAY_INIT_KEY, null);
         String skyBattle = preferences.getString(GameManager.SKY_BATTLT_ARRAY_INIT_KEY, null);
         Log.e(TAG, "heroString = " + heroString);
-        Log.e(TAG, "dreamBattleString = " + dreamBattleString);
         if (heroString == null) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     GameManager.getLocationFile(MainActivity.this, CacheManager.FILE_NAME_1);
-                }
-            }).start();
-        }
-        if (dreamBattleString == null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
                     GameManager.getLocationFile(MainActivity.this, CacheManager.FILE_NAME_2);
-                }
-            }).start();
-        }
-        if (skyBattle == null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
                     GameManager.getLocationFile(MainActivity.this, CacheManager.FILE_NAME_3);
                 }
             }).start();

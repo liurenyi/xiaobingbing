@@ -47,7 +47,7 @@ public class GameManager {
             } else if (CacheManager.FILE_NAME_2.equals(fileName)) {
                 parseDreamLocalFile(sb.toString(), context);
             } else if (CacheManager.FILE_NAME_3.equals(fileName)) {
-
+                parseSkyLocalFile(sb.toString(), context);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,5 +128,14 @@ public class GameManager {
             sb.append(dreamBattleArray.getBossVersion() + ": " + dreamBattleArray.getBossRaider() + "-");
         }
         return sb.toString().split("-");
+    }
+
+    public static String[] querySkySQL(String string) {
+        List<SkyBattleArray> skyBattleArrays = DataSupport.where("floor = ?", string).find(SkyBattleArray.class);
+        StringBuilder sb = new StringBuilder();
+        for (SkyBattleArray skyBattleArray : skyBattleArrays) {
+            sb.append(skyBattleArray.getFloorBoss() + ": " + skyBattleArray.getWin() + "~");
+        }
+        return sb.toString().split("~");
     }
 }

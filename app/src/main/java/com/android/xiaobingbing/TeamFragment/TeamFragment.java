@@ -30,7 +30,6 @@ public class TeamFragment extends Fragment {
     private List<HashMap<String, Object>> dreamLists = new ArrayList<>();
 
     public TeamFragment() {
-
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.android.xiaobingbing.TeamFragment;
+package com.android.xiaobingbing.SkyFragment;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,59 +16,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by liurenyi on 2017/5/15.
+ * Created by liurenyi on 2017/5/16.
  */
-public class MyDreamDataAdapter extends BaseExpandableListAdapter {
+public class MySkyAdapter extends BaseExpandableListAdapter {
 
-    public static final String TAG = "liu-MyDreamDataAdapter";
+    private Context context;
+    private List<String> skyGroup;
+    private List<List<String>> skyChild;
 
-    private Context mContext;
-    private List<String> group;
-    private List<List<String>> child;
-
-
-    public MyDreamDataAdapter(Context mContext) {
-        this.mContext = mContext;
-        initializeData();
+    public MySkyAdapter(Context context) {
+        this.context = context;
+        initSkyData();
     }
 
-    public void initializeData() {
-        group = new ArrayList<>();
-        child = new ArrayList<>();
-        String[] dreamBosses = mContext.getResources().getStringArray(R.array.dreamBoss);
-        for (int i = 0; i < dreamBosses.length; i++) {
-            String[] result = GameManager.queryDreamSQL(dreamBosses[i]);
-            addInfo(dreamBosses[i], result);
+    private void initSkyData() {
+        skyGroup = new ArrayList<>();
+        skyChild = new ArrayList<>();
+        String[] skyFloor = context.getResources().getStringArray(R.array.data_sky_battle);
+        for (int i = 0; i < skyFloor.length; i++) {
+            String[] skyWin = GameManager.querySkySQL(skyFloor[i]);
+            addInfo(skyFloor[i], skyWin);
         }
     }
 
     public void addInfo(String string, String[] s) {
-        group.add(string);
+        skyGroup.add(string);
         List<String> childItem = new ArrayList<>();
         for (int i = 0; i < s.length; i++) {
             childItem.add(s[i]);
         }
-        child.add(childItem);
+        skyChild.add(childItem);
     }
 
     @Override
     public int getGroupCount() {
-        return group.size();
+        return skyGroup.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return child.get(groupPosition).size();
+        return skyChild.get(groupPosition).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return group.get(groupPosition);
+        return skyGroup.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return child.get(groupPosition).get(childPosition);
+        return skyChild.get(groupPosition).get(childPosition);
     }
 
     @Override
@@ -88,15 +85,12 @@ public class MyDreamDataAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String title = group.get(groupPosition);
-        return getGroupView(title);
+        return getGroupView(skyGroup.get(groupPosition));
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        String childContext = child.get(groupPosition).get(childPosition);
-        return getchildView(childContext);
-
+        return getchildView(skyChild.get(groupPosition).get(childPosition));
     }
 
     @Override
@@ -110,7 +104,7 @@ public class MyDreamDataAdapter extends BaseExpandableListAdapter {
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 80);
 
-        TextView text = new TextView(mContext);
+        TextView text = new TextView(context);
         text.setLayoutParams(lp);
         // Center the text vertically
         text.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
@@ -127,7 +121,7 @@ public class MyDreamDataAdapter extends BaseExpandableListAdapter {
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 80);
 
-        TextView text = new TextView(mContext);
+        TextView text = new TextView(context);
         text.setLayoutParams(lp);
         // Center the text vertically
         text.setGravity(Gravity.CENTER | Gravity.LEFT);
