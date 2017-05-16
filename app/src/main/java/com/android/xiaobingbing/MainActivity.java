@@ -83,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initGameData() {
-        Log.e("liu","zou");
-        List<DreamBattleArray> dreamBattleArrays = DataSupport.where("bossName = ?", "齐天大圣").find(DreamBattleArray.class);
-        Log.e("liu","zoubudong");
         tabTitles = getResources().getStringArray(R.array.home_tab);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String heroString = preferences.getString(GameManager.HEROIC_INIT_KEY, null);

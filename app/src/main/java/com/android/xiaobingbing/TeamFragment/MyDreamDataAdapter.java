@@ -2,7 +2,6 @@ package com.android.xiaobingbing.TeamFragment;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.android.xiaobingbing.R;
-import com.android.xiaobingbing.data.DreamBattleArray;
 import com.android.xiaobingbing.util.GameManager;
-
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +37,6 @@ public class MyDreamDataAdapter extends BaseExpandableListAdapter {
         child = new ArrayList<>();
         String[] dreamBosses = mContext.getResources().getStringArray(R.array.dreamBoss);
         for (int i = 0; i < dreamBosses.length; i++) {
-//            List<DreamBattleArray> dreamBattleArrays = DataSupport.where("bossName = ?", dreamBosses[i]).find(DreamBattleArray.class);
-//            StringBuilder sb = new StringBuilder();
-//            for (DreamBattleArray dreamBattleArray : dreamBattleArrays) {
-//                sb.append(dreamBattleArray.getBossVersion() + ": " + dreamBattleArray.getBossRaider() + "-");
-//            }
-//            String[] result = sb.toString().split("-");
             String[] result = GameManager.queryDreamSQL(dreamBosses[i]);
             addInfo(dreamBosses[i], result);
         }

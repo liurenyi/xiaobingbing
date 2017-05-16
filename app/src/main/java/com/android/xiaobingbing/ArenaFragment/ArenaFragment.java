@@ -3,17 +3,11 @@ package com.android.xiaobingbing.ArenaFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.xiaobingbing.R;
-import com.android.xiaobingbing.data.DreamBattleArray;
-
-import org.litepal.crud.DataSupport;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
