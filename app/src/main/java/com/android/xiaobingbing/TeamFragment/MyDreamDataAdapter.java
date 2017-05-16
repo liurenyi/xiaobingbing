@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.xiaobingbing.R;
 import com.android.xiaobingbing.data.DreamBattleArray;
+import com.android.xiaobingbing.util.GameManager;
 
 import org.litepal.crud.DataSupport;
 
@@ -40,16 +41,14 @@ public class MyDreamDataAdapter extends BaseExpandableListAdapter {
         child = new ArrayList<>();
         String[] dreamBosses = mContext.getResources().getStringArray(R.array.dreamBoss);
         for (int i = 0; i < dreamBosses.length; i++) {
-            Log.e(tag,"The next step");
-            List<DreamBattleArray> dreamBattleArrays = DataSupport.where("bossName = ?", dreamBosses[i]).find(DreamBattleArray.class);
-            Log.e(tag,"The next step ...");
-            StringBuilder sb = new StringBuilder();
-            for (DreamBattleArray dreamBattleArray : dreamBattleArrays) {
-                sb.append(dreamBattleArray.getBossVersion() + ": " + dreamBattleArray.getBossRaider() + "-");
-            }
-            String[] result = sb.toString().split("-");
+//            List<DreamBattleArray> dreamBattleArrays = DataSupport.where("bossName = ?", dreamBosses[i]).find(DreamBattleArray.class);
+//            StringBuilder sb = new StringBuilder();
+//            for (DreamBattleArray dreamBattleArray : dreamBattleArrays) {
+//                sb.append(dreamBattleArray.getBossVersion() + ": " + dreamBattleArray.getBossRaider() + "-");
+//            }
+//            String[] result = sb.toString().split("-");
+            String[] result = GameManager.queryDreamSQL(dreamBosses[i]);
             addInfo(dreamBosses[i], result);
-
         }
     }
 

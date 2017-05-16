@@ -97,4 +97,12 @@ public class GameManager {
         editor.apply();
     }
 
+    public static String[] queryDreamSQL(String string) {
+        List<DreamBattleArray> dreamBattleArrays = DataSupport.where("bossName = ?", string).find(DreamBattleArray.class);
+        StringBuilder sb = new StringBuilder();
+        for (DreamBattleArray dreamBattleArray : dreamBattleArrays) {
+            sb.append(dreamBattleArray.getBossVersion() + ": " + dreamBattleArray.getBossRaider() + "-");
+        }
+        return sb.toString().split("-");
+    }
 }

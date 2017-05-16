@@ -73,9 +73,6 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
-//        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//        }
         if (ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.READ_PHONE_STATE);
         }
@@ -86,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initGameData() {
+        Log.e("liu","zou");
+        List<DreamBattleArray> dreamBattleArrays = DataSupport.where("bossName = ?", "齐天大圣").find(DreamBattleArray.class);
+        Log.e("liu","zoubudong");
         tabTitles = getResources().getStringArray(R.array.home_tab);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String heroString = preferences.getString(GameManager.HEROIC_INIT_KEY, null);
