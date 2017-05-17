@@ -6,6 +6,7 @@
     tools:context="com.android.xiaobingbing.ChildItemDescriptionActivity">
 
     <LinearLayout
+        android:id="@+id/layout_child_title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/colorPrimaryDark">
@@ -21,5 +22,11 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_below="@+id/layout_child_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
 
 </RelativeLayout>
