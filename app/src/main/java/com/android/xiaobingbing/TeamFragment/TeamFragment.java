@@ -3,10 +3,12 @@ package com.android.xiaobingbing.TeamFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.android.xiaobingbing.R;
 import com.android.xiaobingbing.data.DreamBattleArray;
@@ -20,7 +22,9 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TeamFragment extends Fragment {
+public class TeamFragment extends Fragment implements ExpandableListView.OnChildClickListener {
+
+    public static final String TAG = "liu-TeamFragment";
 
 //    private ListView listView;
         private ExpandableListView listView;
@@ -39,6 +43,7 @@ public class TeamFragment extends Fragment {
         listView = (ExpandableListView) view.findViewById(R.id.listView);
         adapter = new MyDreamDataAdapter(getContext());
         listView.setAdapter(adapter);
+        listView.setOnChildClickListener(this);
         return view;
     }
 
@@ -52,5 +57,14 @@ public class TeamFragment extends Fragment {
             hashMap.put("bossVersion", dreamBattleArray.getBossVersion());
             dreamLists.add(hashMap);
         }
+    }
+
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        Object child = adapter.getChild(groupPosition, childPosition);  // 获取当前child显示内容。
+        long childId = adapter.getChildId(groupPosition, childPosition);
+        int childrenCount = adapter.getChildrenCount(groupPosition);
+        Log.e(TAG, "child = " + child + " childId = " + childId + " childrenCount = " + childrenCount);
+        return true;
     }
 }

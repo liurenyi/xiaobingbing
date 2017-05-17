@@ -101,7 +101,7 @@ public class MyDreamDataAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 
     //创建组/子视图

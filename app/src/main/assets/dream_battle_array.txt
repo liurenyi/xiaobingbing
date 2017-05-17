@@ -1,4 +1,5 @@
 ﻿[
+{"id":"BOSS01","bossName":"齐天大圣","raiders":"死亡先知,老鹿,天怒法师,修补匠或奥特曼,机甲浣熊","version":"单人"},
 {"id":"BOSS01","bossName":"齐天大圣","raiders":"死亡先知,游吟诗人,老鹿,天怒法师,奥特曼,机甲浣熊","version":"联机"},
 {"id":"BOSS02","bossName":"黑暗娜迦","raiders":"混沌骑士,尸王,小鱼人,小强,老鹿,月亮女神","version":"联机"},
 {"id":"BOSS02","bossName":"黑暗娜迦","raiders":"艾吉奥,死亡先知,小鱼人,小强,老鹿,月亮女神","version":"联机"},
