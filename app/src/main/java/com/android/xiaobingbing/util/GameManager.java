@@ -86,6 +86,7 @@ public class GameManager {
                 dream.setBossName(jsonObject.getString("bossName"));
                 dream.setBossRaider(jsonObject.getString("raiders"));
                 dream.setBossVersion(jsonObject.getString("version"));
+                dream.setUrl(jsonObject.optString("url"));
                 lists.add(dream);
             }
             DataSupport.saveAll(lists);
@@ -121,6 +122,9 @@ public class GameManager {
         editor.apply();
     }
 
+    /**
+     * 查找梦境阵容的数据库方法
+     */
     public static String[] queryDreamSQL(String string) {
         List<DreamBattleArray> dreamBattleArrays = DataSupport.where("bossName = ?", string).find(DreamBattleArray.class);
         StringBuilder sb = new StringBuilder();
@@ -128,6 +132,20 @@ public class GameManager {
             sb.append(dreamBattleArray.getBossVersion() + ": " + dreamBattleArray.getBossRaider() + "-");
         }
         return sb.toString().split("-");
+    }
+
+    public static String queryDreamSQL(String group, String child) {
+        List<DreamBattleArray> dreamBattleArrays = DataSupport.where("bossName = ?", group).find(DreamBattleArray.class);
+        if (dreamBattleArrays.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (DreamBattleArray dreamBattleArray : dreamBattleArrays) {
+                if (child.trim().equals(dreamBattleArray.getBossRaider().trim())) { /// 记得加上trim()去掉空格，不然返回false
+                    sb.append(dreamBattleArray.getUrl());
+                }
+            }
+            return sb.toString();
+        }
+        return null;
     }
 
     public static String[] querySkySQL(String string) {

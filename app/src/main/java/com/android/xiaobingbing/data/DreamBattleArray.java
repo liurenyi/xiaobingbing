@@ -12,6 +12,7 @@ public class DreamBattleArray extends DataSupport {
     private String bossName;
     private String bossRaider;
     private String bossVersion;
+    private String url;
 
     public int getId() {
         return id;
@@ -51,5 +52,13 @@ public class DreamBattleArray extends DataSupport {
 
     public void setBossVersion(String bossVersion) {
         this.bossVersion = bossVersion;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
