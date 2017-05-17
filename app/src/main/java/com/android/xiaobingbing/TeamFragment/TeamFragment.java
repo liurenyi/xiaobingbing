@@ -1,6 +1,7 @@
 package com.android.xiaobingbing.TeamFragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.android.xiaobingbing.ChildItemDescriptionActivity;
 import com.android.xiaobingbing.R;
 import com.android.xiaobingbing.data.DreamBattleArray;
 
@@ -62,9 +64,16 @@ public class TeamFragment extends Fragment implements ExpandableListView.OnChild
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
         Object child = adapter.getChild(groupPosition, childPosition);  // 获取当前child显示内容。
+        String childResult = child.toString().split(":")[1]; // 去掉单人或者联机的内容
         long childId = adapter.getChildId(groupPosition, childPosition);
         int childrenCount = adapter.getChildrenCount(groupPosition);
-        Log.e(TAG, "child = " + child + " childId = " + childId + " childrenCount = " + childrenCount);
+        Object group = adapter.getGroup(groupPosition); // 获取父条目的内容
+        Log.e(TAG, "childResult = " + childResult + " childId = " + childId + " childrenCount = " + childrenCount);
+        Intent intent = new Intent();
+        intent.setClass(getContext(), ChildItemDescriptionActivity.class);
+        intent.putExtra("child", childResult);
+        intent.putExtra("group", group.toString());
+        startActivity(intent);
         return true;
     }
 }
