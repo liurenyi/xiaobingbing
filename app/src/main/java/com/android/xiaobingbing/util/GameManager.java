@@ -1,11 +1,13 @@
 package com.android.xiaobingbing.util;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.android.xiaobingbing.Cache.CacheManager;
+import com.android.xiaobingbing.R;
 import com.android.xiaobingbing.data.DreamBattleArray;
 import com.android.xiaobingbing.data.HeroicInfo;
 import com.android.xiaobingbing.data.SkyBattleArray;
@@ -31,6 +33,7 @@ public class GameManager {
     public static final String HEROIC_INIT_KEY = "heroic_init";
     public static final String DREAM_BATTLE_ARRAY_INIT_KEY = "dream_battle_array";
     public static final String SKY_BATTLT_ARRAY_INIT_KEY = "sky_battle_array";
+    public static ProgressDialog progressDialog;
 
     public static void getLocationFile(Context context, String fileName) {
         try {
@@ -155,5 +158,31 @@ public class GameManager {
             sb.append(skyBattleArray.getFloorBoss() + ": " + skyBattleArray.getWin() + "~");
         }
         return sb.toString().split("~");
+    }
+
+    /**
+     * 创建正在加载数据的进度框
+     *
+     * @param context
+     */
+    public static void createProgressDialog(Context context) {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // 圆形进度条
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage(context.getResources().getString(R.string.child_progress_dialog_load_text));
+        progressDialog.show();
+    }
+
+    /**
+     * 取消对话框
+     *
+     * @param context
+     */
+    public static void dismissProgressDialog(Context context) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(context);
+        }
+        progressDialog.dismiss();
     }
 }

@@ -8,6 +8,8 @@
     <string name="home_tab_jjc">竞技场</string>
     <string name="home_tab_dream">梦境</string>
     <string name="home_tab_sky">天空要塞</string>
+    <string name="child_null_url_content">没有内容</string>
+    <string name="child_progress_dialog_load_text">正在玩命的加载...</string>
     <string-array name="dreamBoss">
         <item>齐天大圣</item>
         　　
