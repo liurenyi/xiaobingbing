@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.android.xiaobingbing.Cache.CacheManager;
 import com.android.xiaobingbing.ChildItemDescriptionActivity;
 import com.android.xiaobingbing.R;
 import com.android.xiaobingbing.data.DreamBattleArray;
@@ -29,9 +30,9 @@ public class TeamFragment extends Fragment implements ExpandableListView.OnChild
     public static final String TAG = "liu-TeamFragment";
 
 //    private ListView listView;
-        private ExpandableListView listView;
+private ExpandableListView listView;
 //    private DreamAdapter adapter;
-        private MyDreamDataAdapter adapter;
+private MyDreamDataAdapter adapter;
     private List<String> dreamList = new ArrayList<>();
     private List<HashMap<String, Object>> dreamLists = new ArrayList<>();
 
@@ -42,6 +43,9 @@ public class TeamFragment extends Fragment implements ExpandableListView.OnChild
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_team, null);
+        Intent intent = new Intent();
+        intent.setAction(CacheManager.KEY_SECOND_FRAGMENT);
+        getContext().sendBroadcast(intent);
         listView = (ExpandableListView) view.findViewById(R.id.listView);
         adapter = new MyDreamDataAdapter(getContext());
         listView.setAdapter(adapter);

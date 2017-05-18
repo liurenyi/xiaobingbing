@@ -1,12 +1,17 @@
 package com.android.xiaobingbing;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private View inflate;
     private TextView tabItemText;
     private ImageView tabItemImage;
+    private TextView homeTitle;
 
     private Class[] fragment = new Class[]{ArenaFragment.class, TeamFragment.class, SkyFragment.class};
     private String[] tabTitles;
@@ -53,15 +59,21 @@ public class MainActivity extends AppCompatActivity {
 //            getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_main);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(CacheManager.KEY_FIRST_FRAGMENT);
+        filter.addAction(CacheManager.KEY_SECOND_FRAGMENT);
+        filter.addAction(CacheManager.KEY_THIRD_FRAGMENT);
+        registerReceiver(receiver, filter);
         initPermission();
         initGameData();
+        homeTitle = (TextView) this.findViewById(R.id.home_title);
         tabHost = (FragmentTabHost) this.findViewById(R.id.tabHost);
         tabHost.setup(MainActivity.this, getSupportFragmentManager(), android.R.id.tabcontent);
         for (int i = 0; i < fragment.length; i++) {
             inflate = LayoutInflater.from(this).inflate(R.layout.tab_item, null);
             tabItemText = (TextView) inflate.findViewById(R.id.tab_item_text);
             tabItemImage = (ImageView) inflate.findViewById(R.id.tab_item_image);
-            Log.e(TAG,"tabTitles[] = " + tabTitles.length);
+            Log.e(TAG, "tabTitles[] = " + tabTitles.length);
             if (tabTitles.length == 0) {
                 tabTitles = getResources().getStringArray(R.array.home_tab);
             }
@@ -69,14 +81,13 @@ public class MainActivity extends AppCompatActivity {
             tabItemImage.setImageResource(imgSelectors[i]);
             tabHost.addTab(tabHost.newTabSpec("" + i).setIndicator(inflate), fragment[i], null);
         }
-
     }
 
     private void initPermission() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
-        if (ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.READ_PHONE_STATE);
         }
         if (!permissionList.isEmpty()) {
@@ -121,6 +132,29 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
                 break;
+        }
+    }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(CacheManager.KEY_FIRST_FRAGMENT)) {
+                String title = getResources().getString(R.string.home_tab_jjc);
+                updateUI(title);
+            } else if (action.equals(CacheManager.KEY_SECOND_FRAGMENT)) {
+                String title = getResources().getString(R.string.home_tab_dream);
+                updateUI(title);
+            } else if (action.equals(CacheManager.KEY_THIRD_FRAGMENT)) {
+                String title = getResources().getString(R.string.home_tab_sky);
+                updateUI(title);
+            }
+        }
+    };
+
+    private void updateUI(String title) {
+        if (homeTitle != null) {
+            homeTitle.setText(title);
         }
     }
 }
