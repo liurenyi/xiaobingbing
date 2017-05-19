@@ -9,13 +9,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +26,7 @@ import com.android.xiaobingbing.ArenaFragment.ArenaFragment;
 import com.android.xiaobingbing.Cache.CacheManager;
 import com.android.xiaobingbing.SkyFragment.SkyFragment;
 import com.android.xiaobingbing.TeamFragment.TeamFragment;
-import com.android.xiaobingbing.data.DreamBattleArray;
 import com.android.xiaobingbing.util.GameManager;
-
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "liu-MainActivity";
     private FragmentTabHost tabHost;
-    private View inflate;
+    //private View inflate;
     private TextView tabItemText;
     private ImageView tabItemImage;
     private TextView homeTitle;
@@ -47,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private Class[] fragment = new Class[]{ArenaFragment.class, TeamFragment.class, SkyFragment.class};
     private String[] tabTitles;
     private int[] imgSelectors = new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
-
+    private Object[] inflates;
     private List<String> permissionList = new ArrayList<>();
 
     @Override
@@ -59,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //            getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_main);
+        inflates = new Object[]{LayoutInflater.from(this).inflate(R.layout.tab_item, null), LayoutInflater.from(this).inflate(R.layout.tab_item_1, null), LayoutInflater.from(this).inflate(R.layout.tab_item_2, null)};
         IntentFilter filter = new IntentFilter();
         filter.addAction(CacheManager.KEY_FIRST_FRAGMENT);
         filter.addAction(CacheManager.KEY_SECOND_FRAGMENT);
@@ -70,16 +67,16 @@ public class MainActivity extends AppCompatActivity {
         tabHost = (FragmentTabHost) this.findViewById(R.id.tabHost);
         tabHost.setup(MainActivity.this, getSupportFragmentManager(), android.R.id.tabcontent);
         for (int i = 0; i < fragment.length; i++) {
-            inflate = LayoutInflater.from(this).inflate(R.layout.tab_item, null);
-            tabItemText = (TextView) inflate.findViewById(R.id.tab_item_text);
-            tabItemImage = (ImageView) inflate.findViewById(R.id.tab_item_image);
-            Log.e(TAG, "tabTitles[] = " + tabTitles.length);
-            if (tabTitles.length == 0) {
-                tabTitles = getResources().getStringArray(R.array.home_tab);
-            }
-            tabItemText.setText(tabTitles[i]);
-            tabItemImage.setImageResource(imgSelectors[i]);
-            tabHost.addTab(tabHost.newTabSpec("" + i).setIndicator(inflate), fragment[i], null);
+//            //inflate = LayoutInflater.from(this).inflate(R.layout.tab_item, null);
+//            tabItemText = (TextView) inflate.findViewById(R.id.tab_item_text);
+//            tabItemImage = (ImageView) inflate.findViewById(R.id.tab_item_image);
+//            Log.e(TAG, "tabTitles[] = " + tabTitles.length);
+//            if (tabTitles.length == 0) {
+//                tabTitles = getResources().getStringArray(R.array.home_tab);
+//            }
+//            tabItemText.setText(tabTitles[i]);
+//            tabItemImage.setImageResource(imgSelectors[i]);
+            tabHost.addTab(tabHost.newTabSpec("" + i).setIndicator((View) inflates[i]), fragment[i], null);
         }
     }
 
@@ -114,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
             }).start();
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -156,6 +152,12 @@ public class MainActivity extends AppCompatActivity {
         if (homeTitle != null) {
             homeTitle.setText(title);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 }
 

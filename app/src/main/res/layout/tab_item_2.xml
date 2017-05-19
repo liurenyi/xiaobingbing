@@ -5,20 +5,19 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tab_item_text"
+        android:id="@+id/tab_item_text_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/home_tab_jjc"
+        android:text="@string/home_tab_sky"
         android:textColor="@drawable/home_tab_background_text" />
 
     <ImageView
-        android:id="@+id/tab_item_image"
+        android:id="@+id/tab_item_image_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/home_tab_background_image" />
-
+        android:src="@drawable/home_tab_background_image_2" />
 
 </LinearLayout>
